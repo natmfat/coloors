@@ -48,7 +48,10 @@ button {
   font-size: 100%;
   border-radius: 0.5rem;
   border: 1px solid gray;
-  transition: background 0.2s, border 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    border 0.2s,
+    color 0.2s;
 }
 
 button:hover {
@@ -227,7 +230,9 @@ a {
   padding: 0.5rem 0.75rem;
   background: #fff;
   color: gray;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .wrapper .navigation .profile .profile-options a:hover {
@@ -306,7 +311,9 @@ a {
   display: flex;
   align-items: center;
   overflow: hidden;
-  transition: border-color 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 }
 
 .form-wrapper .form .input ion-icon {

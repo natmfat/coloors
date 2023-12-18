@@ -21,7 +21,7 @@ import { getToken } from "@server/utils/getToken";
 
 export async function createUser(
   _: undefined,
-  { name, email, password }: MutationCreateUserArgs
+  { name, email, password }: MutationCreateUserArgs,
 ): Promise<User> {
   const existingUser = await UserRepository.findByEmail(email);
   assert(!existingUser, "A user with the same email already exists.");
@@ -30,7 +30,7 @@ export async function createUser(
     ...(await UserRepository.create(
       name,
       email,
-      await bcrypt.hash(password, 10)
+      await bcrypt.hash(password, 10),
     )),
   });
 }
@@ -38,7 +38,7 @@ export async function createUser(
 export async function createPalette(
   _: undefined,
   { colors }: MutationCreatePaletteArgs,
-  { req }: Context
+  { req }: Context,
 ): Promise<Palette> {
   const user = await getAuthorizedUser(getToken(req));
   const palette = await PaletteRepository.create(user.id, colors);
@@ -52,7 +52,7 @@ export async function createPalette(
 export function updatePalette(
   _: undefined,
   { id: unparsedId, colors }: MutationUpdatePaletteArgs,
-  { req }: Context
+  { req }: Context,
 ) {
   return PaletteRepository.updateColors(parseInt(unparsedId), colors);
 }

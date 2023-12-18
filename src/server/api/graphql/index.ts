@@ -33,6 +33,6 @@ export default async function graphql(app: express.Application) {
         req,
         res,
       }),
-    })
+    }),
   );
 }

@@ -30,7 +30,7 @@ export class PaletteRepository {
       ...palette,
       id: palette.id.toString(),
       author: UserRepository.convertToGQL(
-        "author" in palette ? palette.author : USER_MOCK
+        "author" in palette ? palette.author : USER_MOCK,
       ),
     };
   }
@@ -47,7 +47,7 @@ export class PaletteRepository {
         /* sql */ `SELECT * FROM Palette 
         JOIN User ON Palette.authorId = User.id 
         WHERE Palette.authorId = ?`,
-        [authorId]
+        [authorId],
       )
     )[0];
   }
@@ -55,7 +55,7 @@ export class PaletteRepository {
   static async create(authorId: number, colors: string): Promise<IPalette> {
     const [resultSetHeader] = await pool.query(
       /* sql */ `INSERT INTO Palette (authorId, colors) VALUES (?, ?)`,
-      [authorId, colors]
+      [authorId, colors],
     );
 
     return {
@@ -73,7 +73,7 @@ export class PaletteRepository {
   static async updateColors(id: number, colors: string) {
     const result = await pool.query(
       /* sql */ `UPDATE Palette SET colors = ? WHERE id = ?`,
-      [id, colors]
+      [id, colors],
     );
 
     console.log(result);
@@ -82,7 +82,7 @@ export class PaletteRepository {
   static async updateForks(id: number) {
     await pool.query(
       /* sql */ `UPDATE Palette SET forks = forks + 1 WHERE id = ?`,
-      [id]
+      [id],
     );
   }
 }
