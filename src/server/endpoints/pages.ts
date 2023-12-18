@@ -47,6 +47,6 @@ export default async function home(app: express.Application) {
       return res.status(404).render("error.ejs", { error: 404 });
     }
 
-    res.render("user.ejs", { user: await UserRepository.hydrate(user) });
+    res.render("user.ejs", { profile: await UserRepository.hydrate(user) });
   });
 }

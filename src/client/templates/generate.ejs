@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/styles/pages/generate.css" />
 
   <script>
-    const GENESIS = JSON.parse(`<%- locals.palette ? JSON.stringify(locals.palette.colors) : "[]" %>`)
+    const GENESIS = JSON.parse(`<%- locals.palette ? JSON.stringify(locals.palette.colors.split("|")) : "[]" %>`)
   </script>
   <script type="module" src="/js/pages/generate.js"></script>
 </head>

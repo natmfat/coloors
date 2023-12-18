@@ -55,22 +55,24 @@ export class PaletteRepository {
   static async getAllByUser(authorId: number): Promise<IPalettePacket[]> {
     return (
       await pool.query<IPalettePacket[]>(
-        /* sql */ `SELECT * FROM Palette 
-        JOIN User ON Palette.authorId = User.id 
-        WHERE Palette.authorId = ?`,
+        /* sql */ `SELECT P.* FROM Palette P
+          JOIN User ON P.authorId = User.id 
+          WHERE P.authorId = ?`,
         [authorId]
       )
     )[0];
   }
 
   static async create(authorId: number, colors: string): Promise<IPalette> {
-    const [resultSetHeader] = await pool.query(
-      /* sql */ `INSERT INTO Palette (authorId, colors) VALUES (?, ?)`,
-      [authorId, colors]
-    );
+    const resultSetHeader = (
+      await pool.query(
+        /* sql */ `INSERT INTO Palette (authorId, colors) VALUES (?, ?)`,
+        [authorId, colors]
+      )
+    )[0] as ResultSetHeader;
 
     return {
-      id: (resultSetHeader as ResultSetHeader).insertId,
+      id: resultSetHeader.insertId,
       authorId,
       forks: 0,
       colors,
@@ -82,15 +84,13 @@ export class PaletteRepository {
   }
 
   static async updateColors(id: number, colors: string) {
-    const result = await pool.query(
-      /* sql */ `UPDATE Palette SET colors = ? WHERE id = ?`,
-      [id, colors]
-    );
-
-    console.log(result);
+    await pool.query(/* sql */ `UPDATE Palette SET colors = ? WHERE id = ?`, [
+      colors,
+      id,
+    ]);
   }
 
-  static async updateForks(id: number) {
+  static async incrementFork(id: number) {
     await pool.query(
       /* sql */ `UPDATE Palette SET forks = forks + 1 WHERE id = ?`,
       [id]

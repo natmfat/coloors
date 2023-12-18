@@ -11,8 +11,10 @@ const { div, input, ion_icon } = elements;
 // query
 import graphql from "/js/utils/graphql.js";
 
-// random stuff like color conversions & downloading files
+// @audit-ok for some reason the onInput & onChange event does not fire
+// if we use non-hex color codes
 import { rgbToHex } from "/js/utils/color.js";
+
 import download from "/js/utils/download.js";
 
 // animations
@@ -30,7 +32,9 @@ new Sortable($(".color-wrapper"), { handle: ".handle", animation: 150 });
 
 // get all current colors
 const getAllColors = () =>
-  $(colorWrapper, ".color").map((el) => el.style.background);
+  $(colorWrapper, ".color")
+    .map((el) => el.style.background)
+    .join("|");
 
 const getId = () =>
   location.pathname
@@ -78,6 +82,9 @@ const colorSlice = (background) => {
     input({
       type: "color",
       value: background,
+      onInput: (e) => {
+        color.style.background = e.target.value;
+      },
       onChange: (e) => {
         color.style.background = e.target.value;
       },
@@ -115,7 +122,7 @@ const genesisPalette = () => {
   });
 };
 
-const createPalette = (genesis) => {
+const createPalette = () => {
   const colors = $(colorWrapper, ".color");
   for (const color of colors || []) {
     if (color.dataset.locked == "false" || !color.dataset.locked) {
@@ -235,10 +242,9 @@ forkOption.addEventListener("click", () => {
   } else {
     graphql(`
             mutation Mutation {
-                createPalette(colors: ${JSON.stringify(getAllColors())}) {
+                createPalette(colors: "${getAllColors()}") {
                     id
                 }
-
                 incrementFork(id: "${lastPathname}")
             }
         `).then(async ({ data, errors }) => {
@@ -262,7 +268,7 @@ saveOption.addEventListener("click", () => {
   if (saveAsNew) {
     graphql(`
             mutation Mutation {
-                createPalette(colors: ${JSON.stringify(getAllColors())}) {
+                createPalette(colors: "${getAllColors()}") {
                     id
                 }
             }
@@ -280,9 +286,7 @@ saveOption.addEventListener("click", () => {
   } else {
     graphql(`
             mutation Mutation {
-                updatePalette(id: "${lastPathname}", colors: ${JSON.stringify(
-                  getAllColors()
-                )})
+                updatePalette(id: "${lastPathname}", colors: "${getAllColors()}")
             }
         `).then(async ({ data, errors }) => {
       graphqlNotify(errors);
@@ -291,7 +295,10 @@ saveOption.addEventListener("click", () => {
 });
 
 exportOption.addEventListener("click", () => {
-  download("colors.json", JSON.stringify({ colors: getAllColors() }, null, 4));
+  download(
+    "colors.json",
+    JSON.stringify({ colors: getAllColors().split(",") }, null, 4)
+  );
 });
 
 // initialize palette

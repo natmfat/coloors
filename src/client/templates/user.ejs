@@ -29,7 +29,7 @@
 
     <section class="palette-wrapper">
       <% for(const palette of profile.palettes) {
-                const colors = palette.colors.split(",").map((c) => (
+                const colors = palette.colors.split("|").map((c) => (
                     `<div class="color" style="background: ${c}"></div>`
                 )).join("\n")
             %>
@@ -40,7 +40,7 @@
 
         <div class="details">
           <p><%- palette.forks %> forks</p>
-          <a href="/generate/<%= palette.key %>">
+          <a href="/generate/<%= palette.id %>">
             <ion-icon name="open-outline"></ion-icon>
           </a>
         </div>

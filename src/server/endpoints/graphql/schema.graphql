@@ -25,7 +25,7 @@ type Mutation {
   createUser(name: String!, email: String!, password: String!): User!
   createPalette(colors: String!): Palette!
 
-  updatePalette(id: ID!, colors: String!): [String!]!
+  updatePalette(id: ID!, colors: String!): String!
   incrementFork(id: ID!): String!
   deletePalette(id: ID!): String!
 }

@@ -3,7 +3,7 @@ import signUpModal from "/js/components/modal/signUpModal.js";
 import signInModal from "/js/components/modal/signInModal.js";
 
 // component utilities
-import { remove as removePreloader } from "/js/components/preloader.js";
+import "/js/components/preloader.js";
 import { $ } from "/js/utils/elements.js";
 
 // animations
@@ -52,5 +52,3 @@ const signInOptions = () => {
 if ($(".user-action")) {
   signInOptions();
 }
-
-removePreloader($(".preloader"));
