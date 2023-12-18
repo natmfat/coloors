@@ -15,6 +15,7 @@ type Palette {
 
 type Query {
   getAllPalettes: [Palette!]!
+  getUser: User!
 
   loginUser(email: String!, password: String!): User!
   logoutUser: String!

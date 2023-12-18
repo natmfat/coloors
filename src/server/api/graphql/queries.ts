@@ -8,9 +8,22 @@ import type { Context } from "./context";
 import { PaletteRepository } from "@server/database/repositories/PaletteRepository";
 import { UserRepository } from "@server/database/repositories/UserRepository";
 import { getToken } from "@server/utils/getToken";
+import { getAuthorizedUser } from "@server/utils/getAuthorizedUser";
 
 export function getAllPalettes() {
   return PaletteRepository.getAll();
+}
+
+export async function getUser(
+  _: undefined,
+  __: undefined,
+  { req }: Context
+): Promise<User> {
+  const user = await UserRepository.hydrate(
+    await getAuthorizedUser(getToken(req))
+  );
+
+  return UserRepository.convertToGQL(user);
 }
 
 export async function loginUser(
@@ -39,7 +52,11 @@ export async function loginUser(
   };
 }
 
-export function logoutUser(_: undefined, __: undefined, { res, req }: Context) {
+export function logoutUser(
+  _: undefined,
+  __: undefined,
+  { res, req }: Context
+): string {
   const invalidatedToken = getToken(req);
   res.clearCookie("JWT_TOKEN");
   return invalidatedToken;

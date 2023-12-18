@@ -1,0 +1,356 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+
+  /* hide scroll bar */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* reset box-sizing */
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+/* basic footer (made with love) */
+footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: gray;
+}
+
+footer.empty {
+  padding: 1.5rem 0;
+}
+
+/* default button styles */
+button {
+  color: gray;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  background: none;
+  user-select: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid gray;
+  transition: background 0.2s, border 0.2s, color 0.2s;
+}
+
+button:hover {
+  border-color: #000;
+  color: #000 !important;
+}
+
+button.primary {
+  background: dodgerblue;
+  border: none;
+  color: #fff !important;
+}
+
+button.primary:hover {
+  background: rgb(29, 133, 238);
+  color: #fff;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background: rgb(93, 174, 255);
+}
+
+button:disabled:hover {
+  background: rgb(93, 174, 255);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* preloader overlay */
+.preloader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.preloader .spinner {
+  --thickness: 3px;
+
+  border: var(--thickness) solid #f3f3f3;
+  border-top: var(--thickness) solid dodgerblue;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: a-spin 0.75s linear infinite;
+}
+
+/* bottom left notification */
+.notification {
+  box-shadow: 0 0 1rem #eaeaea;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  background: #fff;
+  position: fixed;
+  left: 2rem;
+  bottom: 2rem;
+  z-index: 100;
+  width: 17rem;
+}
+
+.notification ion-icon {
+  font-size: 2.25rem;
+  color: dodgerblue;
+}
+
+.notification h1 {
+  margin: 1rem 0 0 0;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.notification p {
+  margin: 0.5rem 0 0 0;
+  color: gray;
+}
+
+/* navigation component */
+.wrapper {
+  max-width: 50rem;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+.wrapper .navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  user-select: none;
+}
+
+.wrapper .navigation > div {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper .navigation h1 {
+  margin: 0;
+  color: dodgerblue;
+}
+
+.divider {
+  display: inline-flex;
+  height: 1.25rem;
+  width: 1px;
+  background: gray;
+  margin-left: 1rem;
+}
+
+.wrapper .navigation button {
+  margin-left: 1rem;
+}
+
+.wrapper .navigation .navigation-link {
+  margin-left: 1rem;
+  color: gray;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.wrapper .navigation .navigation-link:hover {
+  color: #000;
+}
+
+.wrapper .navigation .profile {
+  margin-left: 1rem;
+  position: relative;
+}
+
+.wrapper .navigation .profile .profile-circle {
+  user-select: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  background: dodgerblue;
+  color: #fff;
+}
+
+.wrapper .navigation .profile .options-wrapper {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  opacity: 0;
+  z-index: 50;
+  padding-top: 1rem;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.wrapper .navigation .profile .profile-options {
+  background: #fff;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  min-width: 8rem;
+  box-shadow: 0 0.5rem 1rem #eaeaea;
+}
+
+.wrapper .navigation .profile .profile-options a {
+  text-decoration: none;
+  display: block;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  color: gray;
+  transition: background 0.2s, color 0.2s;
+}
+
+.wrapper .navigation .profile .profile-options a:hover {
+  background: #eaeaea;
+  color: #000;
+}
+
+.wrapper .navigation .profile .profile-options a.logout {
+  color: red;
+}
+
+.wrapper .navigation .profile .profile-options a.logout:hover {
+  background: red;
+  color: #fff;
+}
+
+.wrapper .navigation .profile:hover .options-wrapper {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* sign in & sign up form */
+.form-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.form-wrapper .form {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  min-width: 25rem;
+  text-align: center;
+  position: relative;
+}
+
+.form-wrapper .form .close {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  color: gray;
+  font-size: 1.75rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.form-wrapper .form .close:hover {
+  color: #000;
+}
+
+.form-wrapper .form h1 {
+  margin: 0;
+}
+
+.form-wrapper .form p {
+  margin: 0.5rem 0 2rem 0;
+  color: gray;
+}
+
+.form-wrapper .form .input {
+  width: 100%;
+  margin: 1.25rem 0 0 0;
+  border: 1px solid rgb(201, 201, 201);
+  color: rgb(201, 201, 201);
+  outline: none;
+  border-radius: 0.5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.form-wrapper .form .input ion-icon {
+  font-size: 1.75rem;
+  margin: 0 0.75rem;
+}
+
+.form-wrapper .form .input:hover {
+  border-color: gray;
+  color: gray;
+}
+
+.form-wrapper .form .input:focus-within {
+  border-color: dodgerblue;
+  color: dodgerblue;
+}
+
+.form-wrapper .form .input input {
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+  padding: 0.75rem;
+  padding-left: 0;
+  border: none;
+  outline: none;
+}
+
+.form-wrapper .form .input input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset;
+  filter: none;
+}
+
+.form-wrapper .form button {
+  padding: 0.75rem 1rem;
+  margin: 1.25rem 0 0 0;
+  width: 100%;
+}
+
+/* animations */
+@keyframes a-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
