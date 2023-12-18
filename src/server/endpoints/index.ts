@@ -3,13 +3,13 @@ import path from "path";
 import fs from "fs/promises";
 import { pathToFileURL } from "node:url";
 
-type Service = (app: Application) => Promise<void> | void;
+type Endpoint = (app: Application) => Promise<void> | void;
 
 /**
  * Get all of the files in the api directory
  * @returns List of services that attach listeners to the Express app
  */
-export async function getAPI() {
+export async function getEndpoints(): Promise<Endpoint[]> {
   const files = await fs.readdir(__dirname);
   const services = files
     .filter((file) => file !== "index.ts")
@@ -23,7 +23,7 @@ export async function getAPI() {
       // so we have to convert it into a file URL
       // https://nodejs.org/api/url.html#url_url_pathtofileurl_path
       const module = await import(pathToFileURL(importPath).toString());
-      return module.default as Service;
+      return module.default as Endpoint;
     });
 
   return await Promise.all(services);

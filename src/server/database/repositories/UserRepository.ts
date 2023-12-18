@@ -45,7 +45,7 @@ export class UserRepository {
       USER_MOCK,
 
       // dubbed loose because the typing is loose
-      looseUser,
+      looseUser
     ) as IUserHydrated;
 
     return {
@@ -63,11 +63,11 @@ export class UserRepository {
   static async create(
     name: string,
     email: string,
-    password: string,
+    password: string
   ): Promise<IUser> {
     const [resultSetHeader] = await pool.query(
       /* sql */ `INSERT INTO User (name, email, password) VALUES (?, ?, ?)`,
-      [name, email, password],
+      [name, email, password]
     );
 
     return {
@@ -82,7 +82,16 @@ export class UserRepository {
     return (
       await pool.query<IUserPacket[]>(
         /* sql */ `SELECT * FROM User WHERE email = ? LIMIT 1`,
-        [email],
+        [email]
+      )
+    )[0][0];
+  }
+
+  static async findById(id: number): Promise<IUser> {
+    return (
+      await pool.query<IUserPacket[]>(
+        /* sql */ `SELECT * FROM User WHERE id = ? LIMIT 1`,
+        [id]
       )
     )[0][0];
   }

@@ -17,10 +17,10 @@ export function getAllPalettes() {
 export async function getUser(
   _: undefined,
   __: undefined,
-  { req }: Context,
+  { req }: Context
 ): Promise<User> {
   const user = await UserRepository.hydrate(
-    await getAuthorizedUser(getToken(req)),
+    await getAuthorizedUser(getToken(req))
   );
 
   return UserRepository.convertToGQL(user);
@@ -29,7 +29,7 @@ export async function getUser(
 export async function loginUser(
   _: undefined,
   { email, password }: QueryLoginUserArgs,
-  { res }: Context,
+  { res }: Context
 ): Promise<User> {
   const user = await UserRepository.findByEmail(email);
   const authorized = user && (await compare(password, user.password));
@@ -55,7 +55,7 @@ export async function loginUser(
 export function logoutUser(
   _: undefined,
   __: undefined,
-  { res, req }: Context,
+  { res, req }: Context
 ): string {
   const invalidatedToken = getToken(req);
   res.clearCookie("token");

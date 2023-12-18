@@ -2,7 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 
-import { getAPI } from "./server/api";
+import { getEndpoints } from "./server/endpoints";
 
 const app = express();
 
@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "client/public")));
 
 async function main() {
-  const api = await getAPI();
-  for (const service of api) {
-    await service(app);
+  const endpoints = await getEndpoints();
+  for (const endpoint of endpoints) {
+    await endpoint(app);
   }
 
   app.listen(8080);

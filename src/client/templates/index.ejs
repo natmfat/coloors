@@ -26,7 +26,7 @@
       <% 
         if(locals.palettes) { 
           for(const palette of locals.palettes) {
-            const colors = palette.colors.map((c) => (
+            const colors = palette.colors.split(",").map((c) => (
               `<div class="color" style="background: ${c}"></div>`
             )).join("\n")
       %>

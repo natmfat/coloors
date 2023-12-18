@@ -29,7 +29,7 @@
 
     <section class="palette-wrapper">
       <% for(const palette of profile.palettes) {
-                const colors = palette.colors.map(c => (
+                const colors = palette.colors.split(",").map((c) => (
                     `<div class="color" style="background: ${c}"></div>`
                 )).join("\n")
             %>

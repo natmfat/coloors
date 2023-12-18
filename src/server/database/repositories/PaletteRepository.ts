@@ -20,6 +20,15 @@ interface IPalettePacket extends RowDataPacket, Omit<IPalette, "colors"> {
 }
 
 export class PaletteRepository {
+  static async hydrate(palette: IPalette): Promise<IPaletteHydrated> {
+    // @audit make the getAll statement automatically fetch users
+    // fetching per palette in an array would be super expensive (so we should fetch one time only)
+    return {
+      ...palette,
+      author: await UserRepository.findById(palette.id),
+    };
+  }
+
   /**
    * Convert a palette into a GraphQL-friendly form
    * @param palette Palette stored in the table (or enhanced)
@@ -30,15 +39,17 @@ export class PaletteRepository {
       ...palette,
       id: palette.id.toString(),
       author: UserRepository.convertToGQL(
-        "author" in palette ? palette.author : USER_MOCK,
+        "author" in palette ? palette.author : USER_MOCK
       ),
     };
   }
 
   static async getAll() {
     return (
-      await pool.query<IPalettePacket[]>(/* sql */ `SELECT * FROM Palette`)
-    )[0];
+      (
+        await pool.query<IPalettePacket[]>(/* sql */ `SELECT * FROM Palette`)
+      )[0] || []
+    );
   }
 
   static async getAllByUser(authorId: number): Promise<IPalettePacket[]> {
@@ -47,7 +58,7 @@ export class PaletteRepository {
         /* sql */ `SELECT * FROM Palette 
         JOIN User ON Palette.authorId = User.id 
         WHERE Palette.authorId = ?`,
-        [authorId],
+        [authorId]
       )
     )[0];
   }
@@ -55,7 +66,7 @@ export class PaletteRepository {
   static async create(authorId: number, colors: string): Promise<IPalette> {
     const [resultSetHeader] = await pool.query(
       /* sql */ `INSERT INTO Palette (authorId, colors) VALUES (?, ?)`,
-      [authorId, colors],
+      [authorId, colors]
     );
 
     return {
@@ -73,7 +84,7 @@ export class PaletteRepository {
   static async updateColors(id: number, colors: string) {
     const result = await pool.query(
       /* sql */ `UPDATE Palette SET colors = ? WHERE id = ?`,
-      [id, colors],
+      [id, colors]
     );
 
     console.log(result);
@@ -82,7 +93,16 @@ export class PaletteRepository {
   static async updateForks(id: number) {
     await pool.query(
       /* sql */ `UPDATE Palette SET forks = forks + 1 WHERE id = ?`,
-      [id],
+      [id]
     );
+  }
+
+  static async findById(id: number): Promise<IPalette> {
+    return (
+      await pool.query<IPalettePacket[]>(
+        /* sql */ `SELECT * FROM Palette WHERE id = ? LIMIT 1`,
+        [id]
+      )
+    )[0][0];
   }
 }

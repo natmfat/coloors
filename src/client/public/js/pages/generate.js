@@ -56,7 +56,7 @@ const graphqlNotify = (errors, fork) => {
             icon: "info",
             title: "Saved",
             text: "Successfully saved your color palette.",
-          },
+          }
   );
 };
 
@@ -81,7 +81,7 @@ const colorSlice = (background) => {
       onChange: (e) => {
         color.style.background = e.target.value;
       },
-    }),
+    })
   );
 
   const color = div(
@@ -103,7 +103,7 @@ const colorSlice = (background) => {
           color.remove();
         }
       },
-    }),
+    })
   );
 
   return color;
@@ -248,7 +248,7 @@ forkOption.addEventListener("click", () => {
         history.pushState(
           {},
           "coloors | generate",
-          `/generate/${data.createPalette.id}`,
+          `/generate/${data.createPalette.id}`
         );
       }
     });
@@ -273,7 +273,7 @@ saveOption.addEventListener("click", () => {
         history.pushState(
           {},
           "coloors | generate",
-          `/generate/${data.createPalette.id}`,
+          `/generate/${data.createPalette.id}`
         );
       }
     });
@@ -281,7 +281,7 @@ saveOption.addEventListener("click", () => {
     graphql(`
             mutation Mutation {
                 updatePalette(id: "${lastPathname}", colors: ${JSON.stringify(
-                  getAllColors(),
+                  getAllColors()
                 )})
             }
         `).then(async ({ data, errors }) => {
