@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include("./components/globals.html"); %>
-    
-    <title>coloors | generate</title>
+  <%- include("./components/globals.ejs"); %>
 
-    <link rel="stylesheet" href="/css/pages/generate.css" />
+  <title>coloors | generate</title>
 
-    <script>
-        const GENESIS = JSON.parse(`<%- locals.palette ? JSON.stringify(locals.palette.colors) : "[]" %>`)
-    </script>
-    <script src="/js/pages/generate.js" type="module"></script>
+  <link rel="stylesheet" href="/styles/pages/generate.css" />
+
+  <script>
+    const GENESIS = JSON.parse(`<%- locals.palette ? JSON.stringify(locals.palette.colors) : "[]" %>`)
+  </script>
+  <script src="/js/pages/generate.js" type="module"></script>
 </head>
+
 <body>
-    <%- include("./components/preloader.html"); %>
+  <%- include("./components/preloader.ejs"); %>
 
-    <div class="wrapper">
-        <%- include("./components/navigation.html"); %>
+  <div class="wrapper">
+    <%- include("./components/navigation.ejs"); %>
 
-        <div class="color-generator">
-            <div class="generator">
-                <p>Press space to generate a new color palette.</p>
+    <div class="color-generator">
+      <div class="generator">
+        <p>Press space to generate a new color palette.</p>
 
-                <div class="color-wrapper"></div>
-            </div>
+        <div class="color-wrapper"></div>
+      </div>
 
-            <div class="generator-options">
-                <div>
-                    <button title="add a new color slot">add color</button>
+      <div class="generator-options">
+        <div>
+          <button title="add a new color slot">add color</button>
 
-                    <button class="primary" title="new palette">refresh palette</button>
-                </div>
-                
-                <div class="options">
-                    <div class="option" title="delete palette">
-                        <ion-icon name="trash-outline"></ion-icon>
-                        delete
-                    </div>
-                    
-                    <div class="option" title="clone palette">
-                        <ion-icon name="git-branch-outline"></ion-icon>
-                        fork
-                    </div>
-
-                    <div class="option" title="export as JSON">
-                        <ion-icon name="share-outline"></ion-icon>
-                        export
-                    </div>
-
-                    <div class="option" title="save to dashboard">
-                        <ion-icon name="bookmark-outline"></ion-icon>
-                        save
-                    </div>
-                </div>
-            </div>
+          <button class="primary" title="new palette">refresh palette</button>
         </div>
+
+        <div class="options">
+          <div class="option" title="delete palette">
+            <ion-icon name="trash-outline"></ion-icon>
+            delete
+          </div>
+
+          <div class="option" title="clone palette">
+            <ion-icon name="git-branch-outline"></ion-icon>
+            fork
+          </div>
+
+          <div class="option" title="export as JSON">
+            <ion-icon name="share-outline"></ion-icon>
+            export
+          </div>
+
+          <div class="option" title="save to dashboard">
+            <ion-icon name="bookmark-outline"></ion-icon>
+            save
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
+
 </html>

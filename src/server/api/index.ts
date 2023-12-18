@@ -16,7 +16,7 @@ export async function getAPI() {
     .map(async (file) => {
       const resolvedPath = path.resolve(__dirname, file);
       const importPath = (await fs.stat(resolvedPath)).isFile()
-        ? file
+        ? resolvedPath
         : path.resolve(resolvedPath, "index.ts");
 
       // c: isn't a valid import path on windows

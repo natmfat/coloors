@@ -7,13 +7,13 @@ import { getAPI } from "./server/api";
 const app = express();
 
 app.engine("html", require("ejs").renderFile);
-app.set("views", path.join(__dirname, "templates"));
-app.set("view engine", "ejs");
+app.set("view engine", "html");
+app.set("views", path.join(__dirname, "client/templates"));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "client/public")));
 
 async function main() {
   const api = await getAPI();

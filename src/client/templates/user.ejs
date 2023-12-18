@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include("./components/globals.html"); %>
-    
-    <title>coloors | profile</title>
+  <%- include("./components/globals.ejs"); %>
 
-    <link rel="stylesheet" href="/css/pages/user.css" />
-    <link rel="stylesheet" href="/css/shared/palette.css" />
+  <title>coloors | profile</title>
+
+  <link rel="stylesheet" href="/styles/pages/user.css" />
+  <link rel="stylesheet" href="/styles/palette.css" />
 </head>
+
 <body>
-    <%- include("./components/preloader.html"); %>
+  <%- include("./components/preloader.ejs"); %>
 
-    <div class="wrapper">
-        <%- include("./components/navigation.html"); %>
-    
-        <div class="profile-hero">
-            <div class="hero-picture">
-                <%= new String(profile.name).trim().charAt(0) %>
-            </div>
-            <h1 class="hero-title"><%= profile.name.trim() %></h1>
-        </div>
+  <div class="wrapper">
+    <%- include("./components/navigation.ejs"); %>
 
-        <% if(!profile.palettes.length) { %>
-            <p class="no-palettes">This user doesn't have any palettes!</p>
-        <% } %>
+    <div class="profile-hero">
+      <div class="hero-picture">
+        <%= new String(profile.name).trim().charAt(0) %>
+      </div>
+      <h1 class="hero-title"><%= profile.name.trim() %></h1>
+    </div>
 
-        <section class="palette-wrapper">
-            <% for(const palette of profile.palettes) {
+    <% if(!profile.palettes.length) { %>
+    <p class="no-palettes">This user doesn't have any palettes!</p>
+    <% } %>
+
+    <section class="palette-wrapper">
+      <% for(const palette of profile.palettes) {
                 const colors = palette.colors.map(c => (
                     `<div class="color" style="background: ${c}"></div>`
                 )).join("\n")
             %>
-                <div class="palette">
-                    <div class="colors">
-                        <%- colors %>
-                    </div>
+      <div class="palette">
+        <div class="colors">
+          <%- colors %>
+        </div>
 
-                    <div class="details">
-                        <p><%- palette.likes %> forks</p>
-                        <a href="/generate/<%= palette.key %>"><ion-icon name="open-outline"></ion-icon></a>
-                    </div>
-                </div>
-            <% } %>
-        </section>
+        <div class="details">
+          <p><%- palette.forks %> forks</p>
+          <a href="/generate/<%= palette.key %>">
+            <ion-icon name="open-outline"></ion-icon>
+          </a>
+        </div>
+      </div>
+      <% } %>
+    </section>
 
-        <footer class="empty"></footer>
-    </div>
+    <footer class="empty"></footer>
+  </div>
 </body>
+
 </html>

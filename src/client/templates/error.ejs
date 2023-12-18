@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <%- include("./components/globals.html"); %>
-    
-    <title>coloors | error</title>
-    
-    <link rel="stylesheet" href="/css/error.css" />
-</head>
-<body>
-    <main class="error-wrapper">
-        <div class="error">
-            <h1><%= error %></h1>
-            <p>
-                <%= error == 404 
-                    ? "Sorry, we couldn't find that page." 
-                    : "Oh no, our server is dying!" 
-                %>
-            </p>
 
-            <a href="/">
-                <button class="primary">explore palettes</button>
-            </a>
-        </div>
-    </main>
+<head>
+  <%- include("./components/globals.ejs"); %>
+
+  <title>coloors | error</title>
+
+  <link rel="stylesheet" href="/styles/error.css" />
+</head>
+
+<body>
+  <main class="error-wrapper">
+    <div class="error">
+      <h1><%= error %></h1>
+      <p>
+        <%= error == 404 
+            ? "Sorry, we couldn't find that page." 
+            : "Oh no, our server is dying!" 
+        %>
+      </p>
+
+      <a href="/">
+        <button class="primary">explore palettes</button>
+      </a>
+    </div>
+  </main>
 </body>
+
 </html>

@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
-  <%- include("./components/globals.html"); %>
+  <%- include("./components/globals.ejs"); %>
 
   <title>coloors | explore</title>
 
-  <link rel="stylesheet" href="/css/shared/palette.css" />
-  <link rel="stylesheet" href="/css/pages/index.css" />
+  <link rel="stylesheet" href="/styles/pages/index.css" />
+  <link rel="stylesheet" href="/styles/palette.css" />
 </head>
 
 <body>
-  <%- include("./components/preloader.html"); %>
+  <%- include("./components/preloader.ejs"); %>
 
   <div class="wrapper">
-    <%- include("./components/navigation.html"); %>
+    <%- include("./components/navigation.ejs"); %>
 
     <section class="hero">
       <h1>Inspirational Color Palettes</h1>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="details">
-          <p><%- palette.likes %> forks</p>
+          <p><%- palette.forks %> forks</p>
           <a href="/generate/<%= palette.key %>">
             <ion-icon name="open-outline"></ion-icon>
           </a>
