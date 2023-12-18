@@ -11,7 +11,7 @@ export interface IUser {
   password: string;
 }
 
-export interface IUserHydrated extends IUser {
+export interface IUserPopulated extends IUser {
   palettes: IPalette[];
 }
 
@@ -23,7 +23,7 @@ export class UserRepository {
    * @param user User stored in table
    * @returns User with palettes
    */
-  static async hydrate(user: IUser): Promise<IUserHydrated> {
+  static async hydrate(user: IUser): Promise<IUserPopulated> {
     return {
       ...user,
       palettes: await PaletteRepository.getAllByUser(user.id),
@@ -37,7 +37,7 @@ export class UserRepository {
    * @param looseUser User stored in the table (or enhanced)
    * @returns GQL friendly User
    */
-  static convertToGQL(looseUser: IUserHydrated | IUser): User {
+  static convertToGQL(looseUser: IUserPopulated | IUser): User {
     // instead of hydrating IUser we just fill in missnig values with MOCK
     // this is much cheaper and easier to work around (even if it provides dummy data)
     const { password, ...user } = Object.assign(
@@ -46,7 +46,7 @@ export class UserRepository {
 
       // dubbed loose because the typing is loose
       looseUser
-    ) as IUserHydrated;
+    ) as IUserPopulated;
 
     return {
       ...user,
@@ -65,13 +65,15 @@ export class UserRepository {
     email: string,
     password: string
   ): Promise<IUser> {
-    const [resultSetHeader] = await pool.query(
-      /* sql */ `INSERT INTO User (name, email, password) VALUES (?, ?, ?)`,
-      [name, email, password]
-    );
+    const resultSetHeader = (
+      await pool.query(
+        /* sql */ `INSERT INTO User (name, email, password) VALUES (?, ?, ?)`,
+        [name, email, password]
+      )
+    )[0] as ResultSetHeader;
 
     return {
-      id: (resultSetHeader as ResultSetHeader).insertId,
+      id: resultSetHeader.insertId,
       name,
       email,
       password,

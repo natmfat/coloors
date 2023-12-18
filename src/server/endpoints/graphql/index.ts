@@ -6,10 +6,14 @@ import cors from "cors";
 import fs from "fs/promises";
 import path from "path";
 
+import type { Context } from "./context";
 import * as Mutation from "./mutations";
 import * as Query from "./queries";
-import type { Context } from "./context";
 
+/**
+ * Create an Apollo GraphQL server
+ * @param app Express application
+ */
 export default async function graphql(app: express.Application) {
   const typeDefs = (
     await fs.readFile(path.resolve(__dirname, "./schema.graphql"), {
@@ -29,10 +33,7 @@ export default async function graphql(app: express.Application) {
     cors(),
     express.json(),
     expressMiddleware(server, {
-      context: async ({ req, res }): Promise<Context> => ({
-        req,
-        res,
-      }),
-    }),
+      context: async ({ req, res }): Promise<Context> => ({ req, res }),
+    })
   );
 }

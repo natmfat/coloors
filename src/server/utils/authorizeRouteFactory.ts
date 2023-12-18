@@ -3,7 +3,7 @@ import express from "express";
 import { getAuthorizedUser } from "./getAuthorizedUser";
 import { getToken } from "./getToken";
 import {
-  IUserHydrated,
+  IUserPopulated,
   UserRepository,
 } from "@server/database/repositories/UserRepository";
 
@@ -13,7 +13,7 @@ export function authorizeRouteFactory(requireAuth: boolean = false) {
     res: express.Response,
     next: () => void
   ) => {
-    let user: IUserHydrated | undefined = undefined;
+    let user: IUserPopulated | undefined = undefined;
 
     try {
       user = await UserRepository.hydrate(

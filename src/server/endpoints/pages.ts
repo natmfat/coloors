@@ -1,9 +1,14 @@
+import express from "express";
+
 import { PaletteRepository } from "@server/database/repositories/PaletteRepository";
 import { UserRepository } from "@server/database/repositories/UserRepository";
 import { authorizeRouteFactory } from "@server/utils/authorizeRouteFactory";
-import express from "express";
 
-export default async function home(app: express.Application) {
+/**
+ * Apply main page routes to the app
+ * @param app Express application
+ */
+export default async function pages(app: express.Application) {
   app.get("/", authorizeRouteFactory(false), async (_, res) => {
     res.render("index.ejs", {
       palettes: ((await PaletteRepository.getAll()) || []).sort(

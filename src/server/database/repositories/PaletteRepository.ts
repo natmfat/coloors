@@ -11,16 +11,14 @@ export interface IPalette {
   colors: string;
 }
 
-export interface IPaletteHydrated extends IPalette {
+export interface IPalettePopulated extends IPalette {
   author: IUser;
 }
 
-interface IPalettePacket extends RowDataPacket, Omit<IPalette, "colors"> {
-  colors: string;
-}
+interface IPalettePacket extends RowDataPacket, IPalette {}
 
 export class PaletteRepository {
-  static async hydrate(palette: IPalette): Promise<IPaletteHydrated> {
+  static async hydrate(palette: IPalette): Promise<IPalettePopulated> {
     // @audit make the getAll statement automatically fetch users
     // fetching per palette in an array would be super expensive (so we should fetch one time only)
     return {
@@ -34,7 +32,7 @@ export class PaletteRepository {
    * @param palette Palette stored in the table (or enhanced)
    * @returns GQL friendly Palette
    */
-  static convertToGQL(palette: IPaletteHydrated | IPalette): Palette {
+  static convertToGQL(palette: IPalettePopulated | IPalette): Palette {
     return {
       ...palette,
       id: palette.id.toString(),
