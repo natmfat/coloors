@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("./components/globals.html"); %>
+
+  <title>coloors | explore</title>
+
+  <link rel="stylesheet" href="/css/shared/palette.css" />
+  <link rel="stylesheet" href="/css/pages/index.css" />
+</head>
+
+<body>
+  <%- include("./components/preloader.html"); %>
+
+  <div class="wrapper">
+    <%- include("./components/navigation.html"); %>
+
+    <section class="hero">
+      <h1>Inspirational Color Palettes</h1>
+      <p>Fuel your next big idea with hundreds of beautiful palettes</p>
+      <div class="icon-scroll"></div>
+    </section>
+
+    <section class="palette-wrapper">
+      <% 
+        if(locals.palettes) { 
+          for(const palette of locals.palettes) {
+            const colors = palette.colors.map((c) => (
+              `<div class="color" style="background: ${c}"></div>`
+            )).join("\n")
+      %>
+
+      <div class="palette">
+        <div class="colors">
+          <%- colors %>
+        </div>
+
+        <div class="details">
+          <p><%- palette.likes %> forks</p>
+          <a href="/generate/<%= palette.key %>">
+            <ion-icon name="open-outline"></ion-icon>
+          </a>
+        </div>
+      </div>
+
+      <% }} %>
+    </section>
+
+    <footer>
+      Nathan, made with ❤
+    </footer>
+  </div>
+</body>
+
+</html>

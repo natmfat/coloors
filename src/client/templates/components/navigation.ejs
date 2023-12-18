@@ -1,0 +1,33 @@
+<nav class="navigation">
+  <a href="/">
+    <h1>coloors</h1>
+  </a>
+
+  <div>
+    <a href="/generate" class="navigation-link">generate</a>
+    <a href="/" class="navigation-link">explore</a>
+
+    <span class="divider"></span>
+
+    <% if(locals.user) { %>
+    <div class="profile">
+      <div class="profile-circle" id="<%= user.key %>">
+        <%= new String(user.name).trim().charAt(0) %>
+      </div>
+
+
+      <div class="options-wrapper">
+        <div class="profile-options">
+          <a href="/~">dashboard</a>
+          <a href="#">resources</a>
+          <a href="/u/<%= user.key %>">profile</a>
+          <a href="/logout" class="logout">logout</a>
+        </div>
+      </div>
+    </div>
+    <% } else { %>
+    <button class="user-action">sign in</button>
+    <button class="user-action primary">sign up</button>
+    <% } %>
+  </div>
+</nav>
