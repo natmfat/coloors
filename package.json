@@ -4,7 +4,6 @@
   "description": "The ripped off color palettes generator!",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/index.ts",
     "db:seed": "tsx src/server/database/seed.ts",
     "codegen": "graphql-codegen --config codegen.ts",
